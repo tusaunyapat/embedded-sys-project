@@ -1,39 +1,99 @@
 import React, { useState, useEffect } from "react";
+import VeryGoodPic from "../assets/best.png";
+import GoodPic from "../assets/good.png";
+import ModeratePic from "../assets/normal.png";
+import ImpactPic from "../assets/bad.png";
+import ExtremelyPic from "../assets/worst.png";
+import { FaCheckCircle } from "react-icons/fa";
+import LoadingGif from "../assets/loading.gif";
 
 function Detail({ data }) {
-  // Check if data exists and ensure it has at least one element
-  if (!data || data.length === 0) {
+  if (!data) {
     return <p>No data available</p>;
   }
 
-  // Destructure the properties from data[0]
-  const { count, humidity, temp, dust } = data[0];
+  const { count, humidity, temp, dust } = data;
+  const [state, setState] = useState(0);
+  const [isLoading, setIsloading] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
-  // State to hold the quality state index
-  const [state, setState] = useState(() => {
-    let initialState = 0;
+  const handleOpenMachine = () => {
+    setIsComplete(false);
+    setIsloading(true);
+    setTimeout(() => {
+      setIsComplete(true);
+      setIsloading(false);
+    }, 3000);
+  };
+  const qualityLevels = [
+    {
+      label: "Very Good",
+      color: "bg-cyan-400",
+      icon: VeryGoodPic,
+      hasToOpen: false,
+      description: [
+        "The PM 2.5 dust level is between 0-25 µg/m³.",
+        "The air quality is good",
+      ],
+      hasWarning: false,
+      warning: " suitable for outdoor activities and tourism.",
+    },
+    {
+      label: "Good",
+      color: "bg-lime-400",
+      icon: GoodPic,
+      hasToOpen: false,
+      description: [
+        "The PM 2.5 dust level is between 26-37 µg/m³.",
+        "The air quality is fair",
+      ],
+      hasWarning: false,
+      warning: "allowing for outdoor activities and tourism as usual.",
+    },
+    {
+      label: "Moderate",
+      color: "bg-yellow-400",
+      icon: ModeratePic,
+      hasToOpen: true,
+      description: [
+        "The PM 2.5 dust level is between 38-50 µg/m³.",
+        "The air quality is moderate.",
+      ],
+      hasWarning: true,
+      warning:
+        "the general public can carry out outdoor activities as usual. individuals with special health concerns, such as those experiencing initial symptoms like coughing, difficulty breathing, or eye irritation, should reduce the duration of outdoor activities.",
+    },
+    {
+      label: "Very Poor",
+      color: "bg-orange-400",
+      icon: ImpactPic,
+      hasToOpen: true,
+      description: [
+        "The PM 2.5 dust level is between 51-90 µg/m³.",
+        "The air quality is starting to have health impacts.",
+      ],
+      hasWarning: true,
+      warning:
+        "The general public should be cautious about their health. If experiencing initial symptoms such as coughing, difficulty breathing, or eye irritation, it's advisable to reduce outdoor activity duration or use protective equipment if necessary.",
+    },
+    {
+      label: "Extremely Poor",
+      color: "bg-red-400",
+      icon: ExtremelyPic,
+      hasToOpen: true,
+      description: [
+        "The PM 2.5 dust level is at 91 µg/m³ or higher.",
+        "The air quality is at a level where it significantly impacts health.",
+      ],
+      hasWarning: true,
+      warning:
+        " Everyone should avoid outdoor activities, stay away from areas with high air pollution, or use protective equipment if necessary. If experiencing health symptoms, it's important to consult a doctor.",
+    },
+  ];
 
-    // Determine initial state based on dust value
-    if (dust <= 25) {
-      initialState = 0;
-    } else if (dust <= 37) {
-      initialState = 1;
-    } else if (dust <= 50) {
-      initialState = 2;
-    } else if (dust <= 90) {
-      initialState = 3;
-    } else {
-      initialState = 4;
-    }
-
-    return initialState;
-  });
-
-  // Update state based on the dust value when component mounts or data changes
   useEffect(() => {
-    let newState = state; // Keep the current state value
+    let newState = 0;
 
-    // Determine the new state based on the dust value
     if (dust <= 25) {
       newState = 0;
     } else if (dust <= 37) {
@@ -52,17 +112,65 @@ function Detail({ data }) {
     }
   }, [dust]); // Trigger effect when 'dust' value changes
 
-  const quality = ["ดีมาก", "ดี", "ปานกลาง", "เริ่มมีผลกระทบ", "มีผลกระทบ"];
-
   return (
-    <div>
-      <h2 className="text-lg font-bold">Data Details component</h2>
-      <p>Count: {count}</p>
-      <p>Humidity: {humidity}</p>
-      <p>Temperature: {temp}</p>
-      <p>PM 2.5: {dust}</p>
-      <p className="text-red-500">State: {quality[state]}</p>{" "}
-      {/* Use 'state' directly as index */}
+    <div className="w-8/12">
+      <div
+        className={`container flex flex-row justify-between p-4 items-center`}
+      >
+        <img
+          className="w-64 h-64 mr-4"
+          src={qualityLevels[state].icon}
+          alt={qualityLevels[state].label}
+        />
+        <div className={`flex flex-col w-8/12  p-2 items-center`}>
+          <p
+            className={`text-white ${qualityLevels[state].color} w-6/12 p-2 rounded-full font-bold text-xl`}
+          >
+            Level: {qualityLevels[state].label}
+          </p>
+          <ul className="w-[50rem] py-4">
+            {qualityLevels[state].description.map((message, index) => (
+              <li key={index}>
+                <p>{message}</p>
+              </li>
+            ))}
+          </ul>
+
+          <p
+            className={`w-[25rem] ${qualityLevels[state].color} p-4 rounded-xl text-white`}
+          >
+            {qualityLevels[state].warning}
+          </p>
+
+          {qualityLevels[state].hasToOpen ? (
+            <div className="flex flex-row items-center ">
+              <button
+                className="bg-gray-200 hover:bg-[#38bdf8] mt-4 py-2 px-4 mx-2 rounded-lg"
+                onClick={handleOpenMachine}
+              >
+                Open machine
+              </button>
+              {isLoading ? (
+                <img
+                  src={LoadingGif}
+                  className="w-8 flex flex-row text-3xl pt-4"
+                />
+              ) : (
+                ""
+              )}
+              {isComplete ? (
+                <p className="flex flex-row text-3xl pt-4 text-[#84cc16]">
+                  <FaCheckCircle />
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
     </div>
   );
 }
