@@ -113,7 +113,7 @@ function Detail({ data }) {
   }, [dust]); // Trigger effect when 'dust' value changes
 
   return (
-    <div className="w-8/12">
+    <div className="w-8/12 mx-32">
       <div
         className={`container flex flex-row justify-between p-4 items-center`}
       >
@@ -124,11 +124,11 @@ function Detail({ data }) {
         />
         <div className={`flex flex-col w-8/12  p-2 items-center`}>
           <p
-            className={`text-white ${qualityLevels[state].color} w-6/12 p-2 rounded-full font-bold text-xl`}
+            className={`text-white ${qualityLevels[state].color} w-8/12 p-2 rounded-full font-bold text-xl`}
           >
             Level: {qualityLevels[state].label}
           </p>
-          <ul className="w-[50rem] py-4">
+          <ul className=" py-4">
             {qualityLevels[state].description.map((message, index) => (
               <li key={index}>
                 <p>{message}</p>
@@ -137,7 +137,7 @@ function Detail({ data }) {
           </ul>
 
           <p
-            className={`w-[25rem] ${qualityLevels[state].color} p-4 rounded-xl text-white`}
+            className={`w-[24rem] ${qualityLevels[state].color} p-4 rounded-xl text-white`}
           >
             {qualityLevels[state].warning}
           </p>

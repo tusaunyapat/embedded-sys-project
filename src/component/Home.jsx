@@ -33,11 +33,11 @@ function Home() {
   }, []);
 
   return (
-    <div className=" h-screen flex flex-col justify-center items-center  ">
+    <div className=" h-screen flex flex-col justify-center items-center ">
       <div className="shadow-lg flex flex-col justify-center items-center bg-white py-8 ">
         <h1 className="text-3xl font-bold mb-2">Weather Report</h1>
         {data ? (
-          <ul className=" flex justify-evenly items-center p-4 my-4  w-7/12">
+          <ul className=" flex flex-col sm:flex-row justify-evenly items-center p-4 my-4  w-8/12">
             {/* Humidity */}
             <li className="flex flex-row items-start  bg-sky-200 text-sky-600 rounded-xl py-2 px-4 h-20 w-[10rem]">
               <p className="text-[4rem]">
