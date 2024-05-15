@@ -13,8 +13,7 @@ const Uselinegraprh = ({ dataArray }) => {
   }, [dataArray]);
 
   return (
-    <div className="App">
-      <h1>Line Chart Example</h1>
+    <div className="bg-slate-100 p-2 rounded-xl">
       <LineChartComponent data={dataArray} />
     </div>
   );

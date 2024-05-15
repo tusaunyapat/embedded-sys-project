@@ -13,32 +13,32 @@ import {
 const LineChartComponent = ({ data }) => {
   return (
     <LineChart
-      width={450}
-      height={300}
+      width={375}
+      height={250}
       data={data}
-      margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+      margin={{ top: 20, right: 30, left: 10, bottom: 10 }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
+      {/* <CartesianGrid strokeDasharray="3 3" /> */}
       <XAxis dataKey="name" />
       <YAxis />
-      <Tooltip />
+      {/* <Tooltip /> */}
       <Legend />
       <Line
         type="monotone"
         dataKey="dust"
-        stroke="#FF0000"
+        stroke="#78716c"
         activeDot={{ r: 8 }}
       />
       <Line
         type="monotone"
         dataKey="humidity"
-        stroke="#00FF00"
+        stroke="#0284c7"
         activeDot={{ r: 8 }}
       />
       <Line
         type="monotone"
         dataKey="temp"
-        stroke="#8884d8"
+        stroke="#b91c1c"
         activeDot={{ r: 8 }}
       />
     </LineChart>

@@ -7,9 +7,9 @@ import ExtremelyPic from "../assets/worst.png";
 import { FaCheckCircle } from "react-icons/fa";
 import LoadingGif from "../assets/loading.gif";
 
-import Snackbar from '@mui/joy/Snackbar';
-import Button from '@mui/joy/Button';
-import CircularProgress from '@mui/joy/CircularProgress';
+import Snackbar from "@mui/joy/Snackbar";
+import Button from "@mui/joy/Button";
+import CircularProgress from "@mui/joy/CircularProgress";
 
 function Detail({ data }) {
   if (!data) {
@@ -121,21 +121,21 @@ function Detail({ data }) {
   }, [dust]); // Trigger effect when 'dust' value changes
 
   return (
-    <div className="w-6/12 mx-2 ">
+    <div className="w-6/12 mx-2 items-center">
       <div className={`container flex flex-col justify-between  items-center`}>
         <div className={`flex flex-row w-full  p-2 items-center `}>
           <img
-            className="w-48 h-48 mr-4"
+            className="w-40 h-40 mr-4"
             src={qualityLevels[state].icon}
             alt={qualityLevels[state].label}
           />
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-items-center">
             <p
-              className={`text-white ${qualityLevels[state].color} w-8/12 p-2 rounded-full font-bold text-xl`}
+              className={`text-white ${qualityLevels[state].color} w-10/12 p-2 rounded-full font-bold text-xl`}
             >
               Level: {qualityLevels[state].label}
             </p>
-            <ul className=" py-2 ">
+            <ul className=" py-2 w-[21.5em]">
               {qualityLevels[state].description.map((message, index) => (
                 <li key={index}>
                   <p>{message}</p>
@@ -172,33 +172,37 @@ function Detail({ data }) {
           </div>
         </div>
         <p
-          className={`w-full ${qualityLevels[state].color} p-4 my-2 rounded-xl text-white`}
+          className={`w-[32rem] ml-12 ${qualityLevels[state].color} p-4 my-2 rounded-xl text-white`}
         >
           {qualityLevels[state].warning}
         </p>
       </div>
 
       <Snackbar
-                variant="soft"
-                color="success"
-                open={isComplete}
-                onClose={() => {setOpen(false);setIsComplete(false)}}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                
-                endDecorator={
-                    <Button
-                        onClick={() => {setOpen(false);setIsComplete(false)}}
-                        size="sm"
-                        variant="soft"
-                        color="success"
-                    >
-                        Dismiss
-                    </Button>
-                }
-            >
-                Your machine has been turned on.
-            </Snackbar>
-      
+        variant="soft"
+        color="success"
+        open={isComplete}
+        onClose={() => {
+          setOpen(false);
+          setIsComplete(false);
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        endDecorator={
+          <Button
+            onClick={() => {
+              setOpen(false);
+              setIsComplete(false);
+            }}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        Your machine has been turned on.
+      </Snackbar>
     </div>
   );
 }
