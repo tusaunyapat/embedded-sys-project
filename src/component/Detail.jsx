@@ -7,6 +7,10 @@ import ExtremelyPic from "../assets/worst.png";
 import { FaCheckCircle } from "react-icons/fa";
 import LoadingGif from "../assets/loading.gif";
 
+import Snackbar from '@mui/joy/Snackbar';
+import Button from '@mui/joy/Button';
+import CircularProgress from '@mui/joy/CircularProgress';
+
 function Detail({ data }) {
   if (!data) {
     return <p>No data available</p>;
@@ -16,6 +20,10 @@ function Detail({ data }) {
   const [state, setState] = useState(0);
   const [isLoading, setIsloading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+
+  // test
+  const [open, setOpen] = React.useState(false);
+  //const [variant, setVariant] = React.useState<SnackbarProps['variant']>('outlined');
 
   const handleOpenMachine = () => {
     setIsComplete(false);
@@ -169,6 +177,28 @@ function Detail({ data }) {
           {qualityLevels[state].warning}
         </p>
       </div>
+
+      <Snackbar
+                variant="soft"
+                color="success"
+                open={isComplete}
+                onClose={() => {setOpen(false);setIsComplete(false)}}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                
+                endDecorator={
+                    <Button
+                        onClick={() => {setOpen(false);setIsComplete(false)}}
+                        size="sm"
+                        variant="soft"
+                        color="success"
+                    >
+                        Dismiss
+                    </Button>
+                }
+            >
+                Your machine has been turned on.
+            </Snackbar>
+      
     </div>
   );
 }
