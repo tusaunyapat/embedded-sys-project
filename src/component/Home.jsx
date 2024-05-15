@@ -4,11 +4,11 @@ import { db } from "../firebase";
 import Detail from "./Detail";
 import { WiHumidity, WiThermometer } from "react-icons/wi";
 import { GiDustCloud } from "react-icons/gi";
-
+import Graph from "./Graph";
+import Uselinegraprh from "./Uselinegraph";
 function Home() {
   const [data, setData] = useState(null);
-
-  const [dustColor, setDustColor] = useState(null);
+  const [dataArray, setDataArray] = useState([]);
 
   useEffect(() => {
     const dataRef = ref(db, "data");
@@ -19,13 +19,26 @@ function Home() {
       dataRef,
       (snapshot) => {
         const updatedData = snapshot.val();
-        console.log("Updated Data:", updatedData);
+        // console.log("Updated Data:", updatedData);
         setData(updatedData);
+        if (updatedData) {
+          setDataArray((prevArray) => {
+            // Append updatedData to the end of prevArray
+            const newArray = [...prevArray, updatedData];
+
+            // Keep only the last 100 elements
+            const limitedArray = newArray.slice(-50);
+
+            // Return the limited array (last 100 elements)
+            return limitedArray;
+          });
+        }
       },
       (error) => {
         console.error("Error fetching data:", error);
       }
     );
+    // console.log(data);
 
     return () => {
       unsubscribe();
@@ -33,7 +46,7 @@ function Home() {
   }, []);
 
   return (
-    <div className=" h-screen flex flex-col justify-center items-center ">
+    <div className="flex flex-col justify-center items-center ">
       <div className="shadow-lg flex flex-col justify-center items-center bg-white py-8 ">
         <h1 className="text-3xl font-bold mb-2">Weather Report</h1>
         {data ? (
@@ -84,7 +97,10 @@ function Home() {
         ) : (
           <p>Loading data...</p>
         )}
-        <Detail data={data} />
+        <div className="flex flex-row items-center justify-center">
+          <Uselinegraprh dataArray={dataArray} />
+          <Detail data={data} />
+        </div>
       </div>
     </div>
   );

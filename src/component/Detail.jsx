@@ -12,7 +12,7 @@ function Detail({ data }) {
     return <p>No data available</p>;
   }
 
-  const { count, humidity, temp, dust } = data;
+  const { humidity, temp, dust } = data;
   const [state, setState] = useState(0);
   const [isLoading, setIsloading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -113,63 +113,61 @@ function Detail({ data }) {
   }, [dust]); // Trigger effect when 'dust' value changes
 
   return (
-    <div className="w-8/12 mx-32">
-      <div
-        className={`container flex flex-row justify-between p-4 items-center`}
-      >
-        <img
-          className="w-64 h-64 mr-4"
-          src={qualityLevels[state].icon}
-          alt={qualityLevels[state].label}
-        />
-        <div className={`flex flex-col w-8/12  p-2 items-center`}>
-          <p
-            className={`text-white ${qualityLevels[state].color} w-8/12 p-2 rounded-full font-bold text-xl`}
-          >
-            Level: {qualityLevels[state].label}
-          </p>
-          <ul className=" py-4">
-            {qualityLevels[state].description.map((message, index) => (
-              <li key={index}>
-                <p>{message}</p>
-              </li>
-            ))}
-          </ul>
-
-          <p
-            className={`w-[24rem] ${qualityLevels[state].color} p-4 rounded-xl text-white`}
-          >
-            {qualityLevels[state].warning}
-          </p>
-
-          {qualityLevels[state].hasToOpen ? (
-            <div className="flex flex-row items-center ">
-              <button
-                className="bg-gray-200 hover:bg-[#38bdf8] mt-4 py-2 px-4 mx-2 rounded-lg"
-                onClick={handleOpenMachine}
-              >
-                Open machine
-              </button>
-              {isLoading ? (
-                <img
-                  src={LoadingGif}
-                  className="w-8 flex flex-row text-3xl pt-4"
-                />
-              ) : (
-                ""
-              )}
-              {isComplete ? (
-                <p className="flex flex-row text-3xl pt-4 text-[#84cc16]">
-                  <FaCheckCircle />
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-          ) : (
-            ""
-          )}
+    <div className="w-6/12 mx-2 ">
+      <div className={`container flex flex-col justify-between  items-center`}>
+        <div className={`flex flex-row w-full  p-2 items-center `}>
+          <img
+            className="w-48 h-48 mr-4"
+            src={qualityLevels[state].icon}
+            alt={qualityLevels[state].label}
+          />
+          <div className="flex flex-col items-center">
+            <p
+              className={`text-white ${qualityLevels[state].color} w-8/12 p-2 rounded-full font-bold text-xl`}
+            >
+              Level: {qualityLevels[state].label}
+            </p>
+            <ul className=" py-2 ">
+              {qualityLevels[state].description.map((message, index) => (
+                <li key={index}>
+                  <p>{message}</p>
+                </li>
+              ))}
+            </ul>
+            {qualityLevels[state].hasToOpen ? (
+              <div className="flex flex-row items-center m-0 p-0">
+                <button
+                  className="bg-gray-200 hover:bg-[#38bdf8] py-2 px-4 mx-2 rounded-lg"
+                  onClick={handleOpenMachine}
+                >
+                  Open machine
+                </button>
+                {isLoading ? (
+                  <img
+                    src={LoadingGif}
+                    className="w-8 flex flex-row text-3xl pt-4"
+                  />
+                ) : (
+                  ""
+                )}
+                {isComplete ? (
+                  <p className="flex flex-row text-3xl pt-4 text-[#84cc16]">
+                    <FaCheckCircle />
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
+        <p
+          className={`w-full ${qualityLevels[state].color} p-4 my-2 rounded-xl text-white`}
+        >
+          {qualityLevels[state].warning}
+        </p>
       </div>
     </div>
   );
