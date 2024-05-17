@@ -11,7 +11,7 @@ import Snackbar from "@mui/joy/Snackbar";
 import Button from "@mui/joy/Button";
 import CircularProgress from "@mui/joy/CircularProgress";
 
-function Detail({ data }) {
+function Detail({ data ,setbgcolor}) {
   if (!data) {
     return <p>No data available</p>;
   }
@@ -100,18 +100,24 @@ function Detail({ data }) {
   ];
 
   useEffect(() => {
+    
     let newState = 0;
-
+    
     if (dust <= 25) {
       newState = 0;
+      setbgcolor("bg-lime-300");
     } else if (dust <= 37) {
       newState = 1;
+      setbgcolor("bg-amber-200");
     } else if (dust <= 50) {
       newState = 2;
+      setbgcolor("bg-amber-500");
     } else if (dust <= 90) {
       newState = 3;
+      setbgcolor("bg-orange-500");
     } else {
       newState = 4;
+      setbgcolor("bg-red-600");
     }
 
     // Update state only if the new state is different from the current state

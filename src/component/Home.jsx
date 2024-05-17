@@ -6,7 +6,7 @@ import { WiHumidity, WiThermometer } from "react-icons/wi";
 import { GiDustCloud } from "react-icons/gi";
 import Graph from "./Graph";
 import Uselinegraprh from "./Uselinegraph";
-function Home() {
+function Home({setbgcolor}) {
   const [data, setData] = useState(null);
   const [dataArray, setDataArray] = useState([]);
 
@@ -47,7 +47,7 @@ function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <div className="shadow-lg flex flex-col justify-center items-center bg-white py-8 w-10/12 ">
+      <div className={`shadow-lg flex flex-col justify-center items-center bg-white py-8 w-10/12 bg- `}>
         <h1 className="text-3xl font-bold mb-2">Weather Report</h1>
         {data ? (
           <ul className=" flex flex-col sm:flex-row justify-evenly items-center p-4 my-4  w-8/12">
@@ -99,7 +99,7 @@ function Home() {
         )}
         <div className="flex flex-row items-center justify-center">
           <Uselinegraprh dataArray={dataArray} />
-          <Detail data={data} />
+          <Detail data={data} setbgcolor={setbgcolor} />
         </div>
       </div>
     </div>
