@@ -45,6 +45,8 @@ function Home({setbgcolor}) {
     };
   }, []);
 
+  
+
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className={`shadow-lg flex flex-col justify-center items-center bg-white py-8 w-10/12 bg- `}>
@@ -88,7 +90,7 @@ function Home({setbgcolor}) {
               <div className="flex flex-col items-center justify-between w-full">
                 <p className="text-sm font-bold">Air quality - PM 2.5</p>
                 <div className="flex flex-row items-end">
-                  <p className="text-3xl ">{data.dust}</p>
+                  <p className="text-3xl ">{data.dust.toFixed(2)}</p>
                   <p className="text-base ml-1 ">mg/m&sup3;</p>
                 </div>
               </div>
